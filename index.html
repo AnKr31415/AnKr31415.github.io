@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="login-screen" style="text-align: center; margin-top: 100px;">
+        <h1>🔐 Interner Bereich</h1>
+        <p>Bitte gib das Passwort ein, um auf das OBsT-Wiki zuzugreifen.</p>
+        <button onclick="checkPassword()" class="toggle-btn" style="position: static;">Passwort eingeben</button>
+    </div>
+
+    <div id="wiki-content" style="display: none;">
 
     <button id="sidebar-toggle" class="toggle-btn">☰ Glossar</button>
 
@@ -30,8 +37,8 @@
         </main>
     </div>
 
-    <script src="script.js"></script>  
+    <script src="script.js"></script>
 
 </body>
-
 </html>
+
