@@ -10,38 +10,39 @@
     <div id="login-screen">
         <div class="wiki-main" style="margin: 100px auto; text-align: center; max-width: 400px;">
             <h1>🔐 Interner Bereich</h1>
-            <p>Bitte gib das Passwort ein:</p>
-            
-            <input type="password" id="password-input" placeholder="Passwort hier eintippen..." 
-                   style="padding: 10px; width: 80%; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px;">
-            
-            <br>
-            
+            <input type="password" id="password-input" placeholder="Passwort...">
+            <br><br>
             <button onclick="checkPassword()" class="toggle-btn" style="position: static;">Einloggen</button>
         </div>
     </div>
 
     <div id="wiki-content" style="display: none;">
-        </div>
+        
+        <button id="sidebar-toggle" class="toggle-btn">☰ Glossar</button>
 
-    <script src="script.js"></script>
-
-    <button id="sidebar-toggle" class="toggle-btn">☰ Glossar</button>
-
-    <nav id="mySidebar" class="sidebar">
-        <h2>📚 Menü</h2>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="obst.html">OBST</a></li>
-            <li><a href="Admins.html">Admins</a></li>
-            <li><a href="adminrat.html">Adminrat</a></li>
-             <li><a href="verwaltungsrat.html">Verwaltungsrat</a></li>
-             <li><a href="obstkorb.html">Obstkorb</a></li>
-             <li><a href="großeErnte.html">Die Große Ernte</a></li>
-             <li><a href="ssd.html">Sonderbeauftragter für digitale Dienste</a></li>
-        </ul>
-    </nav>
-
+        <nav id="mySidebar" class="sidebar">
+            <div class="sidebar-top">
+                <h2>📚 Menü</h2>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="obst.html">OBST</a></li>
+                    <li><a href="Admins.html">Admins</a></li>
+                    <li><a href="adminrat.html">Adminrat</a></li>
+                    <li><a href="verwaltungsrat.html">Verwaltungsrat</a></li>
+                    <li><a href="obstkorb.html">Obstkorb</a></li>
+                    <li><a href="großeErnte.html">Die Große Ernte</a></li>
+                    <li><a href="ssd.html">SSD</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-bottom">
+                <hr>
+                <ul>
+                    <li><a href="#" onclick="logout()" style="color: #e74c3c; font-weight: bold;">Logout 🚪</a></li>
+                </ul>
+            </div>
+        </nav>
+        
      <main id="mainContent" class="wiki-main">
         <h1>Die große Ernte</h1>
         <hr>
@@ -54,4 +55,5 @@
 </body>
 
 </html>
+
 
