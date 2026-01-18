@@ -1,7 +1,6 @@
 function checkPassword() {
     const input = document.getElementById('password-input').value;
     
-    // "Bananenkuchen" verschlüsselt als Base64 ist: QmFuYW5lbmt1Y2hlbg==
     if (btoa(input) === "QmFuYW5lbmt1Y2hlbg==") { 
         document.getElementById('wiki-content').style.display = "block";
         document.getElementById('login-screen').style.display = "none";
@@ -35,3 +34,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
