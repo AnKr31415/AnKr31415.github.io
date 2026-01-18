@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="login-screen">
+        <div class="wiki-main" style="margin: 100px auto; text-align: center; max-width: 400px;">
+            <h1>🔐 Interner Bereich</h1>
+            <input type="password" id="password-input" placeholder="Passwort...">
+            <br><br>
+            <button onclick="checkPassword()" class="toggle-btn" style="position: static;">Einloggen</button>
+        </div>
+    </div>
+
+    <div id="wiki-content" style="display: none;">
+        </div>
+
+    <script src="script.js"></script>
 
     <button id="sidebar-toggle" class="toggle-btn">☰ Glossar</button>
 
@@ -48,3 +61,4 @@
 </body>
 
 </html>
+
