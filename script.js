@@ -15,7 +15,7 @@ async function checkPassword() {
     const hash = await hashPassword(input);
 
     // Der Fingerabdruck von "Bananenkuchen"
-    const korrektesHash = "9374029319e319522858104f6918804a8b7a42167d4ed5a8d9a218f29e160538";
+    const korrektesHash = "5cf0d09593c3ca6e5499859bf65191fef6694421f19ae0b8310a6549d00ec381";
 
     if (hash === korrektesHash) {
         document.getElementById('wiki-content').style.display = "block";
@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
 
