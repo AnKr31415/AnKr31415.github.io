@@ -26,6 +26,13 @@ async function checkPassword() {
     }
 }
 
+function logout() {
+    // Entfernt den "Eingeloggt"-Status aus dem Browser-Speicher
+    sessionStorage.removeItem('loggedIn');
+    // Lädt die Seite neu -> Login-Screen erscheint sofort wieder
+    location.reload();
+}
+
 // C. Automatischer Check beim Laden & Sidebar-Logik
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -59,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
 
