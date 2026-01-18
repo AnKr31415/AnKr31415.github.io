@@ -1,7 +1,23 @@
-function checkPassword() {
-    const input = document.getElementById('password-input').value;
+// A. Mathematische Funktion zum Verschlüsseln (Hash erstellen)
+async function hashPassword(string) {
+    const utf8 = new TextEncoder().encode(string);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// B. Die Login-Prüfung
+async function checkPassword() {
+    const inputField = document.getElementById('password-input');
+    const input = inputField.value;
     
-    if (btoa(input) === "QmFuYW5lbmt1Y2hlbg==") { 
+    // Erstellt den Fingerabdruck deiner Eingabe
+    const hash = await hashPassword(input);
+
+    // Der Fingerabdruck von "Bananenkuchen"
+    const korrektesHash = "67a78378536f45a0572e92c68f2762a4d0f625488179377465660882e737032c";
+
+    if (hash === korrektesHash) {
         document.getElementById('wiki-content').style.display = "block";
         document.getElementById('login-screen').style.display = "none";
         sessionStorage.setItem('loggedIn', 'true');
@@ -10,19 +26,28 @@ function checkPassword() {
     }
 }
 
-// Prüft beim Laden der Seite (auch bei Unterseiten), ob man schon eingeloggt ist
+// C. Automatischer Check beim Laden & Sidebar-Logik
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Prüfen, ob man in dieser Sitzung schon eingeloggt war
     if (sessionStorage.getItem('loggedIn') === 'true') {
-        const wikiContent = document.getElementById('wiki-content');
-        const loginScreen = document.getElementById('login-screen');
-        
-        if (wikiContent && loginScreen) {
-            wikiContent.style.display = "block";
-            loginScreen.style.display = "none";
+        const content = document.getElementById('wiki-content');
+        const login = document.getElementById('login-screen');
+        if (content && login) {
+            content.style.display = "block";
+            login.style.display = "none";
         }
     }
 
-    // Deine bestehende Sidebar-Logik
+    // 2. Enter-Taste im Login-Feld aktivieren
+    const passwordInput = document.getElementById('password-input');
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+    }
+
+    // 3. Deine Sidebar-Logik
     const toggleBtn = document.getElementById('sidebar-toggle');
     const sidebar = document.getElementById('mySidebar');
     const mainContent = document.getElementById('mainContent');
@@ -34,4 +59,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
