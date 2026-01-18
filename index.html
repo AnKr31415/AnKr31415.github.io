@@ -7,10 +7,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="login-screen" style="text-align: center; margin-top: 100px;">
-        <h1>🔐 Interner Bereich</h1>
-        <p>Bitte gib das Passwort ein, um auf das OBsT-Wiki zuzugreifen.</p>
-        <button onclick="checkPassword()" class="toggle-btn" style="position: static;">Passwort eingeben</button>
+    <div id="login-screen">
+        <div class="wiki-main" style="margin: 100px auto; text-align: center; max-width: 400px;">
+            <h1>🔐 Interner Bereich</h1>
+            <p>Bitte gib das Passwort ein:</p>
+            
+            <input type="password" id="password-input" placeholder="Passwort hier eintippen..." 
+                   style="padding: 10px; width: 80%; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 20px;">
+            
+            <br>
+            
+            <button onclick="checkPassword()" class="toggle-btn" style="position: static;">Einloggen</button>
+        </div>
     </div>
 
     <div id="wiki-content" style="display: none;">
@@ -41,4 +49,5 @@
 
 </body>
 </html>
+
 
