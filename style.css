@@ -25,20 +25,42 @@ nav a.active {
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
+  flex-wrap: wrap; /* Erlaubt das Umbrechen auf Mobilgeräten */
+  padding: 0 10px;
 }
 
 #brain-svg {
-  width: 600px;
-  height: 600px;
+  width: 100%;
+  max-width: 600px; /* Begrenzung auf großen Bildschirmen */
+  height: auto;
+  aspect-ratio: 991 / 573; /* Behält das Seitenverhältnis des SVGs bei */
   border: 1px solid #ccc;
+  background-color: white;
 }
 
 #info-box {
-  max-width: 300px;
+  width: 100%;
+  max-width: 400px;
   text-align: left;
   border: 1px solid #ccc;
   padding: 15px;
   background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+/* Mobile Optimierungen */
+@media (max-width: 768px) {
+  #brain-container {
+    gap: 20px;
+  }
+  
+  h1 {
+    font-size: 1.5em;
+  }
+
+  nav a {
+    margin: 0 10px;
+  }
 }
 
 #legend {

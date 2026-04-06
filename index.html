@@ -8,15 +8,15 @@
   <style>
     /* Verhindert das Verspringen des Layouts */
     #info-box {
-      min-height: 300px; /* Reserviert festen Platz für die längste Beschreibung */
-      min-width: 300px; /* Reserviert festen Platz für die längste Beschreibung */
+      min-height: 250px; 
       background: #f4f4f4;
       padding: 20px;
       border-radius: 8px;
       border: 1px solid #ddd;
-      margin-top: 20px;
+      margin-top: 0; /* Margin wird nun durch Gap im Container geregelt */
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
     }
     #area-info {
       margin-top: 10px;
