@@ -1,0 +1,10 @@
+{
+  "area1": {
+    "name": "Primary Motor Cortex",
+    "description": "Controls voluntary movements"
+  },
+  "area2": {
+    "name": "Primary Somatosensory Cortex",
+    "description": "Processes touch and body sensations"
+  }
+}
