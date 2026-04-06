@@ -17,21 +17,33 @@ async function init() {
       const svgDoc = brainSVGObject.contentDocument;
       if (!svgDoc) return;
 
-      const areas = svgDoc.querySelectorAll('path');
-      areas.forEach(area => {
-        area.addEventListener('mouseover', () => {
-          const info = brodmannData[area.id];
-          if (info) {
-            area.style.fill = 'orange';
-            area.style.cursor = 'pointer';
-            infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
-          }
-        });
+      // Wir suchen nach Pfaden, Polygonen und Gruppen, da IDs oft unterschiedlich vergeben sind
+      const allElements = svgDoc.querySelectorAll('path, polygon, g');
+      
+      allElements.forEach(element => {
+        const rawId = element.id;
+        if (!rawId) return;
 
-        area.addEventListener('mouseout', () => {
-          area.style.fill = 'lightgray';
-          infoElement.innerHTML = '';
-        });
+        // Flexibles Matching: Akzeptiert "area1", "area_1" oder einfach nur "1"
+        const formattedId = rawId.startsWith('area') ? rawId : `area${rawId}`;
+        const info = brodmannData[formattedId];
+
+        // Nur Interaktionen hinzufügen, wenn die ID in der Datenbank existiert.
+        if (info) {
+          // Speichere die Originalfarbe (beachtet auch CSS-Styles)
+          const originalFill = element.style.fill || getComputedStyle(element).fill;
+
+          element.addEventListener('mouseover', () => {
+            element.style.fill = 'orange';
+            element.style.cursor = 'pointer';
+            infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
+          });
+
+          element.addEventListener('mouseout', () => {
+            element.style.fill = originalFill;
+            infoElement.innerHTML = '';
+          });
+        }
       });
     };
 
