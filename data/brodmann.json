@@ -1,10 +1,12 @@
 {
-  "area1": {
-    "name": "Primary Motor Cortex",
-    "description": "Controls voluntary movements"
-  },
-  "area2": {
-    "name": "Primary Somatosensory Cortex",
-    "description": "Processes touch and body sensations"
-  }
+  "area1": {"name": "Primary Somatosensory Cortex", "description": "Processes touch and body sensations."},
+  "area2": {"name": "Secondary Somatosensory Cortex", "description": "Integrates sensory info from the body."},
+  "area4": {"name": "Primary Motor Cortex", "description": "Controls voluntary movement."},
+  "area6": {"name": "Premotor Cortex", "description": "Planning and coordination of movement."},
+  "area17": {"name": "Primary Visual Cortex", "description": "Processes visual input from the eyes."},
+  "area18": {"name": "Secondary Visual Cortex", "description": "Further visual processing."},
+  "area21": {"name": "Middle Temporal Gyrus", "description": "Involved in auditory processing and language."},
+  "area22": {"name": "Superior Temporal Gyrus", "description": "Important for auditory perception and language."},
+  "area23": {"name": "Ventral Posterior Cingulate Cortex", "description": "Part of limbic system, involved in emotion."},
+  "area24": {"name": "Dorsal Anterior Cingulate Cortex", "description": "Emotion regulation, attention, and cognitive control."}
 }
