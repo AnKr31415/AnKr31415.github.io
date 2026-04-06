@@ -1,6 +1,15 @@
-console.log("DEBUG: Skript geladen. URL-Protokoll:", window.location.protocol);
+console.log("DEBUG: Skript geladen.");
+
+// Hilfreicher Hinweis für Mobile-Testing
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    console.warn("TIPP: Für den Zugriff vom Handy nutze nicht 'localhost', sondern deine lokale IP-Adresse im WLAN.");
+} else {
+    console.log("Verbunden über:", window.location.origin);
+}
 
 let brodmannData = {};
+let lastSelectedArea = null; // Speichert das aktuell hervorgehobene Areal
+const hoverColor = 'orange';
 
 /**
  * Initialisiert die Anwendung, lädt Daten und setzt Event-Listener.
@@ -58,76 +67,75 @@ async function init() {
         colorMap[key] = foundColor;
       });
 
-      const hoverColor = 'orange';
-
-      // Wir untersuchen alle relevanten SVG-Elemente (inkl. Text für die Zahlen-Kästchen)
-      const allElements = svgDoc.querySelectorAll('path, polygon, g, circle, text, tspan');
-      console.log(`Untersuche ${allElements.length} Elemente im SVG...`);
-      let coloredCount = 0;
-      
-      allElements.forEach(element => {
-        // Prüfe, ob das Element oder eines seiner Eltern-Elemente eine Brodmann-ID hat
-        let current = element;
-        let info = null;
-        let areaNumber = null;
-        let formattedId = null;
-
-        // Suche nach der ID im aktuellen Element oder den Eltern (max 2 Ebenen hoch)
-        for (let i = 0; i < 2; i++) {
-          if (current && current.id) {
-            const numMatch = current.id.match(/\d+/);
-            if (numMatch) {
-              const tempId = `area${numMatch[0]}`;
-              if (brodmannData[tempId]) {
-                info = brodmannData[tempId];
-                areaNumber = numMatch[0];
-                formattedId = tempId;
-                break;
-              }
+      // 2. Hilfsfunktion: Findet die Areal-Nummer eines Elements oder seiner Eltern
+      const getAreaInfo = (element) => {
+        let curr = element;
+        while (curr && curr !== svgDoc) {
+          if (curr.id) {
+            const match = curr.id.match(/^area(\d+)/);
+            if (match) {
+              const num = match[1];
+              const key = `area${num}`;
+              if (brodmannData[key]) return { element: curr, id: key, number: num, data: brodmannData[key] };
             }
           }
-          current = current.parentElement;
+          curr = curr.parentElement;
+        }
+        return null;
+      };
+
+      // 3. UI-Update Funktion
+      const selectArea = (area) => {
+        // Vorheriges Areal zurücksetzen
+        if (lastSelectedArea) {
+          lastSelectedArea.element.style.fill = colorMap[lastSelectedArea.id];
+          lastSelectedArea = null;
         }
 
-        if (!info) {
-          // Wenn das Element (oder sein Parent) kein Areal ist, machen wir es "durchklickbar".
-          // Das ist entscheidend, damit Text-Zahlen die Flächen darunter nicht blockieren.
-          element.style.pointerEvents = 'none';
+        if (area) {
+          area.element.style.fill = hoverColor;
+          if (infoBoxHeader) infoBoxHeader.textContent = `Areal ${area.number}: ${area.data.name}`;
+          if (infoElement) infoElement.innerHTML = area.data.description;
+          lastSelectedArea = area;
+        }
+      };
+
+      // 4. Initialisierung der SVG-Elemente
+      const allPaths = svgDoc.querySelectorAll('path, polygon, circle');
+      allPaths.forEach(el => {
+        const area = getAreaInfo(el);
+        if (area) {
+          el.style.fill = colorMap[area.id];
+          el.style.cursor = 'pointer';
+          el.style.pointerEvents = 'auto';
         } else {
-          const areaColor = colorMap[formattedId];
-
-          element.style.fill = areaColor;
-          element.setAttribute('fill', areaColor);
-          coloredCount++;
-
-          element.addEventListener('mouseenter', () => {
-            element.style.fill = hoverColor;
-            element.setAttribute('fill', hoverColor);
-            element.style.cursor = 'pointer';
-            
-            if (infoBoxHeader) {
-              infoBoxHeader.textContent = `Areal ${areaNumber}: ${info.name}`;
-            }
-            if (infoElement) infoElement.innerHTML = info.description;
-            console.log("Hover:", formattedId);
-          });
-
-          element.addEventListener('mouseleave', () => {
-            element.style.fill = areaColor;
-            element.setAttribute('fill', areaColor);
-            element.style.cursor = '';
-            
-            if (infoBoxHeader) infoBoxHeader.textContent = 'Hover over a region';
-            if (infoElement) infoElement.textContent = '';
-          });
+          el.style.pointerEvents = 'none'; // Hintergrund und Deko-Elemente ignorieren
         }
       });
-      
-      if (coloredCount === 0) {
-        console.warn("WARNUNG: Keine Areale zum Färben gefunden. Prüfe die IDs in der SVG-Datei!");
-      } else {
-        console.log(`${coloredCount} Areale erfolgreich initialisiert.`);
-      }
+
+      // Zahlen und Texte "durchklickbar" machen
+      svgDoc.querySelectorAll('text, tspan, g:not([id^="area"])').forEach(el => {
+        el.style.pointerEvents = 'none';
+      });
+
+      // 5. Zentraler Click/Touch Handler
+      svgDoc.addEventListener('click', (e) => {
+        const area = getAreaInfo(e.target);
+        if (area) {
+          e.preventDefault();
+          selectArea(area);
+        }
+      });
+
+      // Mouseover nur für Desktop aktivieren
+      svgDoc.addEventListener('mouseover', (e) => {
+        if (window.matchMedia("(pointer: fine)").matches) {
+          const area = getAreaInfo(e.target);
+          if (area) selectArea(area);
+        }
+      });
+
+      console.log("Interaktions-Setup abgeschlossen.");
     };
 
     // Listener für das Laden des SVG-Dokuments

@@ -67,17 +67,13 @@
     "name": "Gyrus temporalis superior",
     "description": "Teil des Wernicke-Areals (sensorische Sprachregion)."
   },
-  "area23": {
-    "name": "Posteriorer cingulärer Cortex",
-    "description": "nicht gefunden"
-  },
-  "area24": {
-    "name": "Anteriorer cingulärer Cortex",
-    "description": "Emotionen, Gedächtnis."
-  },
   "area37": {
     "name": "Gyrus fusiformis",
     "description": "Höhere Verarbeitung visueller Reize."
+  },
+  "area38": {
+    "name": "38. Brodmann-Areal",
+    "description": "visuelle Erkennung und visuelles Gedächtnis"
   },
   "area39": {
     "name": "Gyrus angularis",

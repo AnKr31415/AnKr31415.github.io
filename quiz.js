@@ -19,26 +19,9 @@ async function initQuiz() {
             // Zentraler Click-Handler auf dem gesamten SVG-Dokument
             // Dies verhindert Bubbling-Probleme mit Layer-IDs (wie Layer_3)
             svgDoc.addEventListener('click', (event) => {
-                let current = event.target;
-                let areaNumber = null;
-                let areaElement = null;
-
-                // Suche nach oben (bis zu 3 Ebenen), ob wir ein Element mit Brodmann-ID treffen
-                for (let i = 0; i < 3; i++) {
-                    if (current && current.id) {
-                        const numMatch = current.id.match(/\d+/);
-                        // Nur akzeptieren, wenn die ID auch in unserer Datenbank existiert
-                        if (numMatch && brodmannData[`area${numMatch[0]}`]) {
-                            areaNumber = numMatch[0];
-                            areaElement = current;
-                            break;
-                        }
-                    }
-                    current = current.parentElement;
-                }
-
-                if (areaNumber && areaElement) {
-                    handleAreaClick(areaElement, areaNumber);
+                const area = getQuizAreaInfo(event.target, svgDoc);
+                if (area) {
+                    handleAreaClick(area.element, area.number);
                 }
             });
 
@@ -61,6 +44,20 @@ async function initQuiz() {
     }
 }
 
+function getQuizAreaInfo(element, svgDoc) {
+    let curr = element;
+    while (curr && curr !== svgDoc) {
+        if (curr.id) {
+            const match = curr.id.match(/^area(\d+)/);
+            if (match && brodmannData[`area${match[1]}`]) {
+                return { element: curr, number: match[1] };
+            }
+        }
+        curr = curr.parentElement;
+    }
+    return null;
+}
+
 function colorSvgByLobes(svgDoc) {
     const lobeMapping = {
         frontal: { ids: [4, 6, 8, 9, 10, 11, 44, 45, 46, 47], color: 'hsl(210, 65%, 85%)' },
@@ -70,12 +67,13 @@ function colorSvgByLobes(svgDoc) {
         limbic: { ids: [23, 24], color: 'hsl(280, 45%, 90%)' }
     };
 
-    svgDoc.querySelectorAll('path, polygon').forEach(el => {
-        const numMatch = el.id ? el.id.match(/\d+/) : null;
-        if (numMatch) {
+    svgDoc.querySelectorAll('path, polygon, circle').forEach(el => {
+        const numMatch = el.id ? el.id.match(/^area(\d+)/) : null;
+        if (numMatch && brodmannData[`area${numMatch[1]}`]) {
+            const areaNum = parseInt(numMatch[1]);
             let color = 'hsl(0, 0%, 90%)';
             for (const lobe in lobeMapping) {
-                if (lobeMapping[lobe].ids.includes(parseInt(numMatch[0]))) {
+                if (lobeMapping[lobe].ids.includes(areaNum)) {
                     color = lobeMapping[lobe].color;
                     break;
                 }
@@ -132,6 +130,8 @@ function handleAreaClick(element, clickedNumber) {
             element.style.fill = originalColor;
             element.setAttribute('fill', originalColor);
             feedbackText.style.color = "#e67e22";
+            const areaName = brodmannData[currentTargetId].name;
+            feedbackText.textContent = `Klicke auf: ${areaName}`;
         }, 500);
     }
 }
