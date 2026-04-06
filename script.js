@@ -10,6 +10,7 @@ async function init() {
     brodmannData = await response.json();
 
     const brainSVGObject = document.getElementById('brain-svg');
+    const infoBoxHeader = document.querySelector('#info-box h2');
     const infoElement = document.getElementById('area-info');
 
     // Funktion zum Zuweisen der Interaktionen
@@ -25,23 +26,23 @@ async function init() {
         if (!rawId) return;
 
         // Flexibles Matching: Akzeptiert "area1", "area_1" oder einfach nur "1"
-        const formattedId = rawId.startsWith('area') ? rawId : `area${rawId}`;
+        const numericId = rawId.replace(/\D/g, '');
+        const formattedId = `area${numericId}`;
         const info = brodmannData[formattedId];
 
         // Nur Interaktionen hinzufügen, wenn die ID in der Datenbank existiert.
         if (info) {
-          // Speichere die Originalfarbe (beachtet auch CSS-Styles)
-          const originalFill = element.style.fill || getComputedStyle(element).fill;
-
           element.addEventListener('mouseover', () => {
             element.style.fill = 'orange';
             element.style.cursor = 'pointer';
+            infoBoxHeader.textContent = info.name;
             infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
           });
 
           element.addEventListener('mouseout', () => {
-            element.style.fill = originalFill;
-            infoElement.innerHTML = '';
+            element.style.fill = ''; // Setzt den Style zurück auf den SVG-Standard
+            infoBoxHeader.textContent = 'Hover over a region';
+            infoElement.textContent = '';
           });
         }
       });
