@@ -18,31 +18,42 @@ async function init() {
       const svgDoc = brainSVGObject.contentDocument;
       if (!svgDoc) return;
 
-      // Wir suchen nach Pfaden, Polygonen und Gruppen, da IDs oft unterschiedlich vergeben sind
-      const allElements = svgDoc.querySelectorAll('path, polygon, g');
+      // Wir suchen nur nach Pfaden und Polygonen (Flächen), um Text/Zahlen auszuschließen
+      const allElements = svgDoc.querySelectorAll('path, polygon');
       
       allElements.forEach(element => {
         const rawId = element.id;
         if (!rawId) return;
 
-        // Flexibles Matching: Akzeptiert "area1", "area_1" oder einfach nur "1"
-        const numericId = rawId.replace(/\D/g, '');
-        const formattedId = `area${numericId}`;
+        // Strenge ID-Prüfung: Nur IDs, die rein numerisch sind oder mit 'area'/'path' beginnen
+        const match = rawId.match(/^(?:area|path)?(\d+)$/i);
+        if (!match) return;
+
+        const formattedId = `area${match[1]}`;
         const info = brodmannData[formattedId];
 
-        // Nur Interaktionen hinzufügen, wenn die ID in der Datenbank existiert.
         if (info) {
-          element.addEventListener('mouseover', () => {
-            element.style.fill = 'orange';
+          // Mouseenter ist stabiler als Mouseover bei komplexen SVGs
+          element.addEventListener('mouseenter', () => {
+            // Wir nutzen setProperty für höhere Priorität
+            element.style.setProperty('fill', 'orange', 'important');
             element.style.cursor = 'pointer';
-            infoBoxHeader.textContent = info.name;
-            infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
+            
+            if (infoBoxHeader) infoBoxHeader.textContent = info.name;
+            if (infoElement) {
+              infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
+            }
+            // Kleiner Debug-Check in der Konsole
+            console.log(`Hovering over: ${formattedId}`);
           });
 
-          element.addEventListener('mouseout', () => {
-            element.style.fill = ''; // Setzt den Style zurück auf den SVG-Standard
-            infoBoxHeader.textContent = 'Hover over a region';
-            infoElement.textContent = '';
+          element.addEventListener('mouseleave', () => {
+            // removeProperty stellt sicher, dass die ursprüngliche Farbe (aus CSS oder Attribut) wieder gilt
+            element.style.removeProperty('fill');
+            element.style.cursor = '';
+            
+            if (infoBoxHeader) infoBoxHeader.textContent = 'Hover over a region';
+            if (infoElement) infoElement.textContent = '';
           });
         }
       });
