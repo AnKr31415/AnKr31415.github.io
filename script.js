@@ -18,56 +18,59 @@ async function init() {
       const svgDoc = brainSVGObject.contentDocument;
       if (!svgDoc) return;
 
-      // 1. Farben generieren: Jedes Areal im JSON bekommt eine eigene Farbe
+      console.log("SVG geladen, starte Initialisierung...");
+
+      // 1. Farben generieren
       const areaKeys = Object.keys(brodmannData);
       const colorMap = {};
-      
       areaKeys.forEach((key, index) => {
-        // Verteilt den Farbton (Hue) gleichmäßig basierend auf der Anzahl der Areale
         const hue = (index * (360 / areaKeys.length)) % 360;
-        // Sättigung 65% und Helligkeit 85% für einen schönen Pastell-Look
-        colorMap[key] = `hsl(${hue}, 65%, 85%)`;
+        colorMap[key] = `hsl(${hue}, 70%, 80%)`;
       });
 
       const hoverColor = 'orange';
 
-      // Wir suchen nur nach Pfaden und Polygonen (Flächen), um Text/Zahlen auszuschließen
-      const allElements = svgDoc.querySelectorAll('path, polygon');
+      // Wir suchen alle Pfade, Polygone und Kreise
+      const allElements = svgDoc.querySelectorAll('path, polygon, circle, ellipse');
       
       allElements.forEach(element => {
         const rawId = element.id;
         if (!rawId) return;
 
-        // Strenge ID-Prüfung: Nur IDs, die rein numerisch sind oder mit 'area'/'path' beginnen
-        const match = rawId.match(/^(?:area|path)?(\d+)$/i);
-        if (!match) return;
+        // Sucht nach der ersten Zahl in der ID (egal ob "path4", "area-4" oder "4")
+        const numMatch = rawId.match(/\d+/);
+        if (!numMatch) return;
 
-        const formattedId = `area${match[1]}`;
+        const formattedId = `area${numMatch[0]}`;
         const info = brodmannData[formattedId];
 
         if (info) {
-          // Holen der spezifischen Farbe für dieses Areal
           const areaColor = colorMap[formattedId];
 
-          // Setze die individuelle Farbe permanent
-          element.style.setProperty('fill', areaColor);
+          // Farbe permanent zuweisen (sowohl Style als auch Attribut für maximale Kompatibilität)
+          element.style.fill = areaColor;
+          element.setAttribute('fill', areaColor);
+          
+          // Debug: Zeige in der Konsole an, welches Areal gefärbt wurde
+          console.log(`Gefärbt: ${rawId} als ${formattedId}`);
 
-          // Mouseenter ist stabiler als Mouseover bei komplexen SVGs
           element.addEventListener('mouseenter', () => {
-            element.style.setProperty('fill', hoverColor, 'important');
+            element.style.fill = hoverColor;
+            element.setAttribute('fill', hoverColor);
             element.style.cursor = 'pointer';
             
-            if (infoBoxHeader) infoBoxHeader.textContent = info.name;
-            if (infoElement) {
-              infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
+            if (infoBoxHeader) {
+              // Wir nutzen die Nummer und den Namen
+              infoBoxHeader.textContent = `Areal ${numMatch[0]}: ${info.name}`;
             }
-            // Kleiner Debug-Check in der Konsole
-            console.log(`Hovering over: ${formattedId}`);
+            if (infoElement) {
+              infoElement.innerHTML = info.description;
+            }
           });
 
           element.addEventListener('mouseleave', () => {
-            // Rückkehr zur individuellen Areal-Farbe
-            element.style.setProperty('fill', areaColor);
+            element.style.fill = areaColor;
+            element.setAttribute('fill', areaColor);
             element.style.cursor = '';
             
             if (infoBoxHeader) infoBoxHeader.textContent = 'Hover over a region';
