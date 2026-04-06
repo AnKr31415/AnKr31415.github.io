@@ -1,29 +1,46 @@
-// Load Brodmann data
 let brodmannData = {};
-fetch('data/brodmann.json')
-  .then(response => response.json())
-  .then(data => brodmannData = data)
-  .catch(err => console.error('Failed to load Brodmann data', err));
 
-// Wait for SVG to load
-const brainSVGObject = document.getElementById('brain-svg');
-brainSVGObject.addEventListener('load', () => {
-  const svgDoc = brainSVGObject.contentDocument;
-  const areas = svgDoc.querySelectorAll('path');
+/**
+ * Initialisiert die Anwendung, lädt Daten und setzt Event-Listener.
+ */
+async function init() {
+  try {
+    // 1. Brodmann-Daten laden
+    const response = await fetch('data/brodmann.json');
+    brodmannData = await response.json();
 
-  areas.forEach(area => {
-    area.addEventListener('mouseover', () => {
-      area.style.fill = 'orange';
-      const info = brodmannData[area.id];
-      if(info) {
-        document.getElementById('area-info').innerHTML =
-          `<strong>${info.name}</strong><br>${info.description}`;
-      }
-    });
+    const brainSVGObject = document.getElementById('brain-svg');
+    const infoElement = document.getElementById('area-info');
 
-    area.addEventListener('mouseout', () => {
-      area.style.fill = 'lightgray';
-      document.getElementById('area-info').innerHTML = '';
-    });
-  });
-});
+    // Funktion zum Zuweisen der Interaktionen
+    const setupInteractions = () => {
+      const svgDoc = brainSVGObject.contentDocument;
+      if (!svgDoc) return;
+
+      const areas = svgDoc.querySelectorAll('path');
+      areas.forEach(area => {
+        area.addEventListener('mouseover', () => {
+          const info = brodmannData[area.id];
+          if (info) {
+            area.style.fill = 'orange';
+            area.style.cursor = 'pointer';
+            infoElement.innerHTML = `<strong>${info.name}</strong><br>${info.description}`;
+          }
+        });
+
+        area.addEventListener('mouseout', () => {
+          area.style.fill = 'lightgray';
+          infoElement.innerHTML = '';
+        });
+      });
+    };
+
+    // Listener für das Laden des SVG-Dokuments
+    brainSVGObject.addEventListener('load', setupInteractions);
+    if (brainSVGObject.contentDocument) setupInteractions();
+  } catch (err) {
+    console.error('Fehler beim Laden der App-Daten:', err);
+  }
+}
+
+init();
