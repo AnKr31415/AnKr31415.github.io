@@ -1,31 +1,118 @@
 {
-  "area1": {"name": "Primärer Somatosensorischer Kortex", "description": "Verarbeitet grundlegende Berührungs- und Körperempfindungen."},
-  "area2": {"name": "Primärer Somatosensorischer Kortex", "description": "Integriert komplexe taktile Informationen."},
-  "area3": {"name": "Primärer Somatosensorischer Kortex", "description": "Hauptareal für die Wahrnehmung von Berührung und Druck."},
-  "area4": {"name": "Primärer Motorischer Kortex", "description": "Steuert die bewusste Ausführung von Bewegungen."},
-  "area5": {"name": "Somatosensorischer Assoziationskortex", "description": "Verarbeitung von räumlichen Informationen beim Tasten."},
-  "area6": {"name": "Prämotorischer Kortex", "description": "Planung und Vorbereitung komplexer Bewegungsabläufe."},
-  "area7": {"name": "Visuomotorischer Kortex", "description": "Koordination zwischen visuellen Reizen und Bewegungen."},
-  "area8": {"name": "Frontales Augenfeld", "description": "Steuerung der bewussten Augenbewegungen."},
-  "area9": {"name": "Dorsolateraler Präfrontaler Kortex", "description": "Zuständig für Arbeitsgedächtnis, Planung und Logik."},
-  "area10": {"name": "Anteriorer Präfrontaler Kortex", "description": "Höchste kognitive Funktionen und Multitasking."},
-  "area11": {"name": "Orbitofrontaler Kortex", "description": "Beteiligt an Entscheidungsfindung und emotionaler Bewertung."},
-  "area17": {"name": "Primäre Sehnhirnrinde (V1)", "description": "Erste Station der visuellen Informationsverarbeitung."},
-  "area18": {"name": "Sekundäre Sehnhirnrinde (V2)", "description": "Erkennung von Mustern, Farben und Formen."},
-  "area19": {"name": "Assoziativer Visueller Kortex", "description": "Wahrnehmung von Bewegung und räumlicher Tiefe."},
-  "area20": {"name": "Inferiorer Temporallappen", "description": "Wichtig für die visuelle Objekterkennung."},
-  "area21": {"name": "Mittlerer Temporallappen", "description": "Verarbeitung von Sprache und komplexen Geräuschen."},
-  "area22": {"name": "Superiorer Temporallappen", "description": "Enthält das Wernicke-Areal für Sprachverständnis."},
-  "area23": {"name": "Posteriorer Cingulärer Kortex", "description": "Teil des limbischen Systems; Fokus auf Emotionen."},
-  "area24": {"name": "Anteriorer Cingulärer Kortex", "description": "Emotionsregulation und Aufmerksamkeit."},
-  "area37": {"name": "Gyrus Fusiformis", "description": "Spezialisiert auf die Erkennung von Gesichtern."},
-  "area39": {"name": "Gyrus Angularis", "description": "Integration von visuellen, auditiven und taktilen Reizen (Lesen)."},
-  "area40": {"name": "Gyrus Supramarginalis", "description": "Sprachverarbeitung und Wiedererkennung von Symbolen."},
-  "area41": {"name": "Primärer Auditiver Kortex", "description": "Grundlegende Wahrnehmung von Tönen und Frequenzen."},
-  "area42": {"name": "Sekundärer Auditiver Kortex", "description": "Höhere Verarbeitung von akustischen Signalen."},
-  "area43": {"name": "Gustatorischer Kortex", "description": "Verarbeitung von Geschmackswahrnehmungen."},
-  "area44": {"name": "Broca-Areal (Pars opercularis)", "description": "Motorische Sprachproduktion und Grammatik."},
-  "area45": {"name": "Broca-Areal (Pars triangularis)", "description": "Semantische Aspekte der Sprache."},
-  "area46": {"name": "Dorsolateraler Präfrontaler Kortex", "description": "Kognitive Kontrolle und Exekutivfunktionen."},
-  "area47": {"name": "Pars orbitalis", "description": "Beteiligt an der Syntax der Sprache."}
+  "area1": {
+    "name": "Somatosensorischer Cortex",
+    "description": "Teil des somatosensorischen Cortex."
+  },
+  "area2": {
+    "name": "Somatosensorischer Cortex",
+    "description": "Teil des somatosensorischen Cortex."
+  },
+  "area3": {
+    "name": "Somatosensorischer Cortex",
+    "description": "Teil des somatosensorischen Cortex."
+  },
+  "area4": {
+    "name": "Primärmotorischer Cortex",
+    "description": "Steuerung der willkürlichen Bewegungen."
+  },
+  "area5": {
+    "name": "Somatosensorische Verarbeitung",
+    "description": "Verarbeitung, Bewegungen und Assoziationen."
+  },
+  "area6": {
+    "name": "Prämotorischer und supplementär-motorischer Cortex",
+    "description": "Steuerung der willkürlichen Bewegungen."
+  },
+  "area7": {
+    "name": "Somatosensibles Assoziationszentrum",
+    "description": "Assoziationszentrum der somatosensiblen Rinde."
+  },
+  "area8": {
+    "name": "Frontales Augenfeld",
+    "description": "Steuerung der Augenbewegungen."
+  },
+  "area9": {
+    "name": "Dorsolateraler präfrontaler Cortex",
+    "description": "Kurzzeitgedächtnis, Reaktion auf akustische Signale, Bewertung von Emotionen."
+  },
+  "area10": {
+    "name": "Vorderer präfrontaler Cortex",
+    "description": "Assoziationszentrum, exekutive Funktionen."
+  },
+  "area11": {
+    "name": "Orbitofrontaler Cortex",
+    "description": "Entscheidungsfindung, Integration neuer Informationen in das Langzeitgedächtnis."
+  },
+  "area17": {
+    "name": "Primäre Sehrinde",
+    "description": "Verarbeitung visueller Informationen."
+  },
+  "area18": {
+    "name": "Sekundäre Sehrinde",
+    "description": "Weiterverarbeitung visueller Informationen."
+  },
+  "area19": {
+    "name": "Tertiäre Sehrinde",
+    "description": "Assoziative Verarbeitung visueller Informationen."
+  },
+  "area20": {
+    "name": "Gyrus temporalis inferior",
+    "description": "Verarbeitung von Sehreizen, Erkennen von Erinnerungen."
+  },
+  "area21": {
+    "name": "Gyrus temporalis medius",
+    "description": "Verarbeitung optischer Informationen."
+  },
+  "area22": {
+    "name": "Gyrus temporalis superior",
+    "description": "Teil des Wernicke-Areals (sensorische Sprachregion)."
+  },
+  "area23": {
+    "name": "Posteriorer cingulärer Cortex",
+    "description": "nicht gefunden"
+  },
+  "area24": {
+    "name": "Anteriorer cingulärer Cortex",
+    "description": "Emotionen, Gedächtnis."
+  },
+  "area37": {
+    "name": "Gyrus fusiformis",
+    "description": "Höhere Verarbeitung visueller Reize."
+  },
+  "area39": {
+    "name": "Gyrus angularis",
+    "description": "Teil eines tertiären Assoziationsgebietes."
+  },
+  "area40": {
+    "name": "Gyrus supramarginalis",
+    "description": "Teil eines tertiären Assoziationsgebietes."
+  },
+  "area41": {
+    "name": "Primäre Hörrinde",
+    "description": "Verarbeitung akustischer Informationen."
+  },
+  "area42": {
+    "name": "Sekundäre Hörrinde",
+    "description": "Weiterverarbeitung akustischer Informationen."
+  },
+  "area43": {
+    "name": "Primäres Geschmackszentrum",
+    "description": "Verarbeitung von Geschmacksreizen."
+  },
+  "area44": {
+    "name": "Broca-Areal",
+    "description": "Motorische Sprachregion."
+  },
+  "area45": {
+    "name": "Broca-Areal",
+    "description": "Motorische Sprachregion."
+  },
+  "area46": {
+    "name": "Dorsolateraler präfrontaler Cortex",
+    "description": "Aufmerksamkeit, Arbeitsgedächtnis."
+  },
+  "area47": {
+    "name": "Pars orbitalis",
+    "description": "Syntax, Sprachverarbeitung."
+  }
 }

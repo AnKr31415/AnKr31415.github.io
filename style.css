@@ -4,6 +4,22 @@ body {
   margin: 20px;
 }
 
+nav {
+  margin-bottom: 30px;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #3498db;
+  font-weight: bold;
+}
+
+nav a.active {
+  color: #2c3e50;
+  border-bottom: 2px solid #2c3e50;
+}
+
 #brain-container {
   display: flex;
   justify-content: center;
@@ -24,3 +40,35 @@ body {
   padding: 15px;
   background-color: #f9f9f9;
 }
+
+#legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.frontal { background-color: hsl(210, 65%, 85%); }
+.parietal { background-color: hsl(40, 70%, 85%); }
+.temporal { background-color: hsl(130, 50%, 85%); }
+.occipital { background-color: hsl(0, 65%, 90%); }
+.limbic { background-color: hsl(280, 45%, 90%); }
+.unknown { background-color: hsl(0, 0%, 90%); }

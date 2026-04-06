@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brodmann Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #quiz-controls {
+      margin: 20px 0;
+      padding: 15px;
+      background: #eef2f7;
+      border-radius: 8px;
+    }
+    .score-board {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #2c3e50;
+    }
+    #question-text {
+      font-size: 1.3em;
+      margin: 10px 0;
+      color: #e67e22;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Explorer</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </nav>
+
+  <h1>Neuro-Quiz: Finde das Areal</h1>
+
+  <div id="quiz-controls">
+    <div class="score-board">Punktzahl: <span id="score">0</span></div>
+    <div id="question-text">Lade Quiz...</div>
+  </div>
+
+  <div id="brain-container">
+    <object id="brain-svg" type="image/svg+xml" data="assets/Gray726-Brodman.svg"></object>
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>
